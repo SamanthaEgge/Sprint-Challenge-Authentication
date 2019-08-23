@@ -9,7 +9,13 @@ router.post('/register', (request, response) => {
   const hash = bcrypt.hashSync(user.password)
   user.password = hash
 
-
+  Users.add(user)
+    .then(user => {
+      response.status(201).json(user)
+    })
+    .catch(error => {
+      response.status(500).response.json(error)
+    })
 });
 
 router.post('/login', (request, response) => {

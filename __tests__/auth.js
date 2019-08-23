@@ -1,11 +1,15 @@
 const request = require('supertest')
 const server = require('../api/server.js')
 
-describe('Routes', async () => {
+describe('Routes', () => {
   describe('POST /api/auth/register', () => {
     it('should return creation', () => {
       return request(server)
         .post('/api/auth/register')
+        .send({
+          username: 'notsam3',
+          password: '1234abcde'
+        })
         .then(response => {
           expect(response).toHaveProperty('status', 201)
         })
@@ -13,6 +17,10 @@ describe('Routes', async () => {
     it('should return json object', () => {
       return request(server)
         .post('/api/auth/register')
+        .send({
+          username: 'notsam4',
+          password: '1234abcde'
+        })
         .then(response => {
           expect(response).toHaveProperty('type', 'application/json')
         })
@@ -22,6 +30,10 @@ describe('Routes', async () => {
     it('should return confirmation', () => {
       return request(server)
         .post('/api/auth/login')
+        .send({
+          username: 'sam',
+          password: '1234abcde'
+        })
         .then(response => {
           expect(response).toHaveProperty('status', 200)
         })

@@ -27,6 +27,8 @@ router.post('/login', (request, response) => {
     .first()
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
+        request.session.username = user.username
+        request.session.loggedIn = true
         response.status(200).json({ message: `Howdy, ${user.username}!`})
       } else {
         response.status(401).response.json({ message: 'These are incorrect credentials. Check your username and password, then try again' })
